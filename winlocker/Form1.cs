@@ -132,6 +132,11 @@ namespace winlocker
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
+            getPic();
+        }
+
+        private void getPic()
+        {
             var videoDevs = new FilterInfoCollection(
                 FilterCategory.VideoInputDevice);
             if (videoDevs.Count>0)
