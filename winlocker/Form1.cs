@@ -155,7 +155,6 @@ namespace winlocker
             detector.ScalingFactor = 1.5F;
             detector.ScalingMode = ObjectDetectorScalingMode.GreaterToSmaller;
             detector.UseParallelProcessing = true;
-            detector.Suppression = 3;
 
             var faceObjects = detector.ProcessFrame(bitmap);
             if (faceObjects.Count() > 0)
