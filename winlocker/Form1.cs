@@ -27,7 +27,8 @@ namespace winlocker
             objKeyboardProcess = new LowLevelKeyboardProc(captureKey);
             ptrHook = SetWindowsHookEx(13, objKeyboardProcess, GetModuleHandle(objCurrentModule.ModuleName), 0);
 
-            show2();
+            if (Screen.AllScreens.Count() > 1)
+                show2();
             this.Focus();
         }
 
