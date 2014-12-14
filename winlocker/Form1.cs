@@ -42,40 +42,26 @@ namespace winlocker
         {
             Screen[] sc;
             sc = Screen.AllScreens;
-            //get all the screen width and heights 
             Form2 f = new Form2();
-            f.FormBorderStyle = FormBorderStyle.None;
             f.Left = sc[0].Bounds.Width;
             f.Top = sc[0].Bounds.Height;
             f.StartPosition = FormStartPosition.Manual;
             f.Location = sc[0].Bounds.Location;
-            Point p = new Point(sc[0].Bounds.Location.X, sc[0].Bounds.Location.Y);
-            f.Location = p;
-            f.WindowState = FormWindowState.Maximized;
             f.Show();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            var events = e;
-
-            if (e.Alt == true)
-                e.Handled = true;
-
-            if (e.KeyValue == 8)
+            if (e.KeyCode == Keys.Back)
             {
                 if (_qcount > 4)
                     Close();
             }
-            if (e.KeyValue == 81)
+            if (e.KeyCode == Keys.Q)
             {
                 _qcount++;
             }
-
         }
-
-        /* Code to Disable WinKey, Alt+Tab, Ctrl+Esc Starts Here */
-
 
         // Structure contain information about low-level keyboard input event 
         [StructLayout(LayoutKind.Sequential)]
@@ -87,6 +73,7 @@ namespace winlocker
             public int time;
             public IntPtr extra;
         }
+
         //System level functions to be used for hook and unhook keyboard input  
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
