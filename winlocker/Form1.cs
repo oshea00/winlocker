@@ -140,23 +140,6 @@ namespace winlocker
         {
             var bitmap = (Bitmap)eventArgs.Frame.Clone();
 
-            // Is there a face?
-            var detector = new HaarObjectDetector(new FaceHaarCascade(),30);
-
-            detector.SearchMode = ObjectDetectorSearchMode.Single;
-            detector.ScalingFactor = 1.5F;
-            detector.ScalingMode = ObjectDetectorScalingMode.GreaterToSmaller;
-            detector.UseParallelProcessing = true;
-
-            var faceObjects = detector.ProcessFrame(bitmap);
-            if (faceObjects.Count() > 0)
-            {
-                var g  = Graphics.FromImage(bitmap);
-                foreach (var face in faceObjects)
-                    g.DrawRectangle(Pens.DeepSkyBlue, face);
-                g.Dispose();
-            }
-
             var tempFilename = Path.GetRandomFileName();
             bitmap.Save(string.Format(@"c:\temp\{0}",tempFilename+".png"), System.Drawing.Imaging.ImageFormat.Png);
             if (_videoSource != null)
