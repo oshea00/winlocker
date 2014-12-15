@@ -43,6 +43,7 @@ namespace winlocker
             Screen[] sc;
             sc = Screen.AllScreens;
             Form2 f = new Form2();
+            f.form1 = this;
             f.Left = sc[0].Bounds.Width;
             f.Top = sc[0].Bounds.Height;
             f.StartPosition = FormStartPosition.Manual;
@@ -122,7 +123,7 @@ namespace winlocker
             getPic();
         }
 
-        private void getPic()
+        public void getPic()
         {
             var videoDevs = new FilterInfoCollection(
                 FilterCategory.VideoInputDevice);
@@ -132,8 +133,6 @@ namespace winlocker
                 _videoSource.NewFrame += new NewFrameEventHandler(newFrame);
                 _videoSource.Start();
             }
-            if (!LockWorkStation())
-                throw new Win32Exception(Marshal.GetLastWin32Error());
         }
 
         private void newFrame(object sender, NewFrameEventArgs eventArgs)
@@ -142,14 +141,24 @@ namespace winlocker
 
             var tempFilename = Path.GetRandomFileName();
             bitmap.Save(string.Format(@"c:\temp\{0}",tempFilename+".png"), System.Drawing.Imaging.ImageFormat.Png);
-            if (_videoSource != null)
-                _videoSource.SignalToStop();
+
+            this.Invoke(new EventHandler(
+                delegate
+                {
+                    Close();
+                }));
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_videoSource != null)
+            {
                 _videoSource.SignalToStop();
+            }
+            if (!LockWorkStation())
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
         }
         /* Code to Disable WinKey, Alt+Tab, Ctrl+Esc Ends Here */
 

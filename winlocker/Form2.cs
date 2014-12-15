@@ -19,9 +19,8 @@ namespace winlocker
 {
     public partial class Form2 : Form
     {
-        int _qcount = 0;
-        int _rcount = 0;
-        VideoCaptureDevice _videoSource;
+
+        public Form1 form1 { get; set; }
 
         public Form2()
         {
@@ -32,44 +31,9 @@ namespace winlocker
         {
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool LockWorkStation();
-
-        private void getPic()
-        {
-            var videoDevs = new FilterInfoCollection(
-                FilterCategory.VideoInputDevice);
-            if (videoDevs.Count>0)
-            {
-                _videoSource = new VideoCaptureDevice(videoDevs[0].MonikerString);
-                _videoSource.NewFrame += new NewFrameEventHandler(newFrame);
-                _videoSource.Start();
-            }
-            if (!LockWorkStation())
-                throw new Win32Exception(Marshal.GetLastWin32Error());
-        }
-
-        private void newFrame(object sender, NewFrameEventArgs eventArgs)
-        {
-            var bitmap = (Bitmap)eventArgs.Frame.Clone();
-
-            var tempFilename = Path.GetRandomFileName();
-            bitmap.Save(string.Format(@"c:\temp\{0}",tempFilename+".png"), System.Drawing.Imaging.ImageFormat.Png);
-            if (_videoSource != null)
-                _videoSource.SignalToStop();
-        }
-
         private void Form2_MouseClick_1(object sender, MouseEventArgs e)
         {
-            getPic();
+            form1.getPic();
         }
-
-        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (_videoSource != null)
-                _videoSource.SignalToStop();
-        }
-        /* Code to Disable WinKey, Alt+Tab, Ctrl+Esc Ends Here */
-
     }
 }

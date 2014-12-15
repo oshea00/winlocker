@@ -40,7 +40,6 @@
             this.Name = "Form2";
             this.Text = "Form2";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseClick_1);
             this.ResumeLayout(false);
 
