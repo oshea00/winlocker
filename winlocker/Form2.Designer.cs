@@ -34,12 +34,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::winlocker.Properties.Resources.monitor2;
+            this.BackgroundImage = global::winlocker.Properties.Resources.monitor3;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form2";
             this.Text = "Form2";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form2_MouseClick_1);
             this.ResumeLayout(false);
 
         }
